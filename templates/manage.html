@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<title>farcon: {{ obj.username }}@{{ obj.label }}</title>
+		<style type="text/css">
+			body {
+				background-image:url(http://i.imgur.com/8BRv1.png); /* This will auto-repeat in x and y direction */
+				color: #333;
+				font-family:Helvetica;
+			}
+			#container { 
+				width: 800px;
+				margin: 0 auto; /* 0px top and bottom margin, auto margin left and right. This centers the div */
+				text-align: center; /* This affect everything inside the div */
+			}
+			p {
+				margin: 0;
+				padding: 0;
+			}
+			h1 {
+			}
+			h2 {
+			}
+			#the_form {
+				text-align: left;
+			}
+			#top-right {
+ 				display:block;
+   				position:absolute;
+   				top:0;
+   				right:0;
+				font-size:15px;
+ 			}
+ 			a, a:visited { color: #000; text-decoration: none; }  a:hover { color: #555; }
+			{% if stdout %}
+			#results {
+				border: 1px solid #333;
+			}
+			{% endif %}
+		</style>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			<h1>{{ obj.label }}</h1> 
+			<h2>{{ obj.username }}@{{ obj.hostname }}</h2> 
+			<div id="the_form">
+				<form id="commandForm" action="{{ request.get_full_path }}" method="POST">
+					<p><label for="command">Command:</label>&nbsp;&nbsp;<input type="text" name="command" id="command" />&nbsp;<input type="submit" value="Run" /></p>
+					{% if stdout %}
+						<p><label for="results">Results:</label><br><textarea id="results" name="text" cols="50" rows="10">{{ stdout }}</textarea></p>
+					{% endif %}
+				</form>
+			</div>
+		</div>
+		<div id="top-right">
+		{% url farcon.views.logout as the_url %}
+		<a href="{{ the_url }}">Logout</a><br>
+		</div>
+	</body>
+</html>
+
